@@ -7,27 +7,35 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
 
+
 public class ExperimentManager : MonoBehaviour
 {
     // Set the order of the scenes
     [Tooltip("Excluding the starter scene")]
-    public static string sceneOrder = "BCDEFGHIX";
-    public static int participantNumber = 1;
-    private int currentSceneNumber;
+    public static string sceneOrder = "ABCDEFGHIX";
+    public static int participantNumber = 2;
+    private static int currentSceneNumber;
     public Slider slider1;
     public Slider slider2;
     public Text valueText1;
     public Text valueText2;
-    private string perceivedCarbonation;
-    private string confidence;
-    private char currentSceneLetter;
+    private static string perceivedCarbonation = "50";
+    private static string confidence = "50";
+    private static char currentSceneLetter;
+    
+    private static bool firstSceneLoaded = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Update()
     {
          
     }
     void Start()
-    {
+    {   if (!firstSceneLoaded)
+        {
+            firstSceneLoaded = true;
+            // Start loading scenes
+            LoadNextScene();
+        }
         // Listen to slider value changes
         slider1.onValueChanged.AddListener(OnSliderValueChanged);
         slider2.onValueChanged.AddListener(OnSlider2ValueChanged);
@@ -36,19 +44,23 @@ public class ExperimentManager : MonoBehaviour
     void OnSliderValueChanged(float value)
     {
         perceivedCarbonation = value.ToString();
+        Debug.Log($"Perceived Carbonation: {perceivedCarbonation}");
         valueText1.text = perceivedCarbonation;
     }
 
     void OnSlider2ValueChanged(float value)
     {
         confidence = value.ToString();
+        Debug.Log($"Confidence: {confidence}");
         valueText2.text = confidence;
     }
 
     // Called in the begining and after each time participant has answered survey,
     public void LogAnswersAndLoadNextScene()
     {
-        DataLoggingManager logger = FindObjectOfType<DataLoggingManager>();
+        DataLoggingManager logger = FindFirstObjectByType<DataLoggingManager>();
+        Debug.Log(logger);
+        Debug.Log($"{participantNumber}, {currentSceneLetter}, {perceivedCarbonation}, {confidence}");
         if (logger != null)
             logger.LogAnswer(participantNumber, currentSceneLetter, perceivedCarbonation, confidence );
         LoadNextScene();
@@ -58,15 +70,11 @@ public class ExperimentManager : MonoBehaviour
         if (!string.IsNullOrEmpty(sceneOrder))
         {
             char sceneLetter = sceneOrder[0];
-            Debug.Log(sceneLetter);
             int sceneNumber = GetSceneNumberFromLetter(sceneLetter);
             sceneOrder = sceneOrder.Substring(1);
-            Debug.Log(sceneOrder);
-            
+            currentSceneLetter = sceneLetter;
             currentSceneNumber = sceneNumber;
-            Debug.Log(sceneNumber);
             SceneManager.LoadScene(sceneNumber);
-            
         }
         else 
         {
@@ -103,12 +111,5 @@ public class ExperimentManager : MonoBehaviour
         }
         return 9;
     }
-
-    
-    public void UpdateText(int value)
-    {
-        valueText1.text = value.ToString();
-    }
-    
     
 }
