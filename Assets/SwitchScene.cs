@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using System.Collections.Generic;
+using UnityEngine.UI;
+
 public class SwitchScene : MonoBehaviour
 {
     public GameObject menuUI;
@@ -13,10 +15,20 @@ public class SwitchScene : MonoBehaviour
     private float holdTimer = 0f;
     private bool menuVisible = false;
     private bool toggledDuringHold = false;
+    public string QUESTION_ONE_TEXT = "Question one";
     
     void Start()
     {
         TryInitializeDevices();
+        Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
+        if (textTransform != null)
+        {
+            Text tmpText = textTransform.GetComponent<Text>();
+            if (tmpText != null)
+            {
+                tmpText.text = QUESTION_ONE_TEXT;
+            }
+        }
     }
 
     void TryInitializeDevices()
@@ -53,6 +65,16 @@ public class SwitchScene : MonoBehaviour
                 menuVisible = !menuVisible;
                 menuUI.SetActive(menuVisible);
                 toggledDuringHold = true;
+                // Set text
+                Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
+                if (textTransform != null)
+                {
+                    Text tmpText = textTransform.GetComponent<Text>();
+                    if (tmpText != null)
+                    {
+                        tmpText.text = QUESTION_ONE_TEXT;
+                    }
+                }
             }
         }
         else
