@@ -15,7 +15,11 @@ public class SwitchScene : MonoBehaviour
     private float holdTimer = 0f;
     private bool menuVisible = false;
     private bool toggledDuringHold = false;
-    public string QUESTION_ONE_TEXT = "Question one";
+    private string QUESTION_ONE_TEXT = "How intense does the visuals feel?";
+    private string QUESTION_TWO_TEXT = "How confident are you?";
+    private string QUESTION_THREE_TEXT = "How intense does the audio feel?";
+    private string QUESTION_FOUR_TEXT = "How confident are you?";
+    
     
     void Start()
     {
@@ -27,6 +31,33 @@ public class SwitchScene : MonoBehaviour
             if (tmpText != null)
             {
                 tmpText.text = QUESTION_ONE_TEXT;
+            }
+        }
+        textTransform = menuUI.transform.Find("Interactive Controls/Question text2");
+        if (textTransform != null)
+        {
+            Text tmpText = textTransform.GetComponent<Text>();
+            if (tmpText != null)
+            {
+                tmpText.text = QUESTION_TWO_TEXT;
+            }
+        }
+        textTransform = menuUI.transform.Find("Interactive Controls/Question text3");
+        if (textTransform != null)
+        {
+            Text tmpText = textTransform.GetComponent<Text>();
+            if (tmpText != null)
+            {
+                tmpText.text = QUESTION_THREE_TEXT;
+            }
+        }
+        textTransform = menuUI.transform.Find("Interactive Controls/Question text4");
+        if (textTransform != null)
+        {
+            Text tmpText = textTransform.GetComponent<Text>();
+            if (tmpText != null)
+            {
+                tmpText.text = QUESTION_FOUR_TEXT;
             }
         }
     }
@@ -66,15 +97,15 @@ public class SwitchScene : MonoBehaviour
                 menuUI.SetActive(menuVisible);
                 toggledDuringHold = true;
                 // Set text
-                Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
-                if (textTransform != null)
-                {
-                    Text tmpText = textTransform.GetComponent<Text>();
-                    if (tmpText != null)
-                    {
-                        tmpText.text = QUESTION_ONE_TEXT;
-                    }
-                }
+                // Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
+                // if (textTransform != null)
+                // {
+                //     Text tmpText = textTransform.GetComponent<Text>();
+                //     if (tmpText != null)
+                //     {
+                //         tmpText.text = QUESTION_ONE_TEXT;
+                //     }
+                // }
             }
         }
         else

@@ -11,13 +11,13 @@ public class DataLoggingManager : MonoBehaviour
 
         if (!File.Exists(filePath))
         {
-            File.WriteAllText(filePath, "ParticipantNumber, SceneLetter, PerceivedCarbonation, Confidence\n");
+            File.WriteAllText(filePath, "ParticipantNumber, SceneLetter, VisualIntensity, VisualConfidence, AuditoryIntensity, AuditoryConfidence\n");
         }
     }
     
-    public void LogAnswer(int ParticipantNumber, char  SceneLetter, string PerceivedCarbonation, string Confidence)
+    public void LogAnswer(int ParticipantNumber, char  SceneLetter, string questionOne, string questionTwo, string questionThree, string questionFour)
     {
-        File.AppendAllText(filePath, $"{ParticipantNumber}, {SceneLetter}, {PerceivedCarbonation}, {Confidence}\n");
+        File.AppendAllText(filePath, $"{ParticipantNumber}, {SceneLetter}, {questionOne}, {questionTwo}, {questionThree}, {questionFour}\n");
     } 
 
     // Update is called once per frame
