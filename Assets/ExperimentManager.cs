@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,25 +9,29 @@ using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
 
 
+
 public class ExperimentManager : MonoBehaviour
 {
     // Set the order of the scenes
     [Tooltip("Excluding the starter scene")]
-    public static string sceneOrder = "HIDECBAFGX";
-    public static int participantNumber = 5;
+    public static string sceneOrder = "SAQBQCQPDQEQFQPGQHQIQX";
+    public static int participantNumber = 566;
     private static int currentSceneNumber;
     public Slider slider1;
     public Slider slider2;
     public Slider slider3;
     public Slider slider4;
+    public Slider slider5;
     public Text valueText1;
     public Text valueText2;
     public Text valueText3;
     public Text valueText4;
+    public Text valueText5;
     private static string questionOneScore = "50";
     private static string questionTwoScore = "50";
     private static string questionThreeScore = "50";
     private static string questionFourScore = "50";
+    private static string questionFiveScore = "50";
     private static char currentSceneLetter;
     
     private static bool firstSceneLoaded = false;
@@ -42,11 +47,39 @@ public class ExperimentManager : MonoBehaviour
             // Start loading scenes
             LoadNextScene();
         }
-        // Listen to slider value changes
-        slider1.onValueChanged.AddListener(OnSliderValueChanged);
-        slider2.onValueChanged.AddListener(OnSlider2ValueChanged);
-        slider3.onValueChanged.AddListener(OnSlider3ValueChanged);
-        slider4.onValueChanged.AddListener(OnSlider4ValueChanged);
+
+        questionOneScore = "50";
+        questionTwoScore = "50";
+        questionThreeScore = "50";
+        questionFourScore = "50";
+        questionFiveScore = "50";
+        
+        if (slider1 != null && slider5 != null)
+        {
+            // Listen to slider value changes
+            slider1.onValueChanged.AddListener(OnSliderValueChanged);
+            slider2.onValueChanged.AddListener(OnSlider2ValueChanged);
+            slider3.onValueChanged.AddListener(OnSlider3ValueChanged);
+            slider4.onValueChanged.AddListener(OnSlider4ValueChanged);    
+            slider5.onValueChanged.AddListener(OnSlider5ValueChanged);
+        }
+
+        Debug.Log(currentSceneNumber);
+        if (currentSceneLetter != 'P' && currentSceneNumber != 10)
+        {
+            StartCoroutine(SceneTimer());
+            Debug.Log("After Scene Timer");    
+        } 
+    }
+    
+    private IEnumerator SceneTimer()
+    {
+        Debug.Log("Scene Timer");
+        yield return new WaitForSeconds(15f);
+        // Do something after 15 seconds
+        LoadNextScene();
+        // Example: automatically go to next scene
+        // LogAnswersAndLoadNextScene();
     }
 
     void OnSliderValueChanged(float value)
@@ -76,14 +109,21 @@ public class ExperimentManager : MonoBehaviour
         Debug.Log($"Question Four: {questionFourScore}");
         valueText4.text = questionFourScore;
     }
+    
+    void OnSlider5ValueChanged(float value)
+    {
+        questionFiveScore = value.ToString();
+        Debug.Log($"Question Five: {questionFiveScore}");
+        valueText5.text = questionFiveScore;
+    }
 
     // Called in the begining and after each time participant has answered survey,
     public void LogAnswersAndLoadNextScene()
     {
         DataLoggingManager logger = FindFirstObjectByType<DataLoggingManager>();
-        Debug.Log($"{participantNumber}, {currentSceneLetter}, {questionOneScore}, {questionTwoScore}, {questionThreeScore}, {questionFourScore}");
+        Debug.Log($"{participantNumber}, {currentSceneLetter}, {questionOneScore}, {questionTwoScore}, {questionThreeScore}, {questionFourScore}, {questionFiveScore}");
         if (logger != null)
-            logger.LogAnswer(participantNumber, currentSceneLetter, questionOneScore, questionTwoScore, questionThreeScore, questionFourScore );
+            logger.LogAnswer(participantNumber, currentSceneLetter, questionOneScore, questionTwoScore, questionThreeScore, questionFourScore, questionFiveScore );
         LoadNextScene();
     }
     public void LoadNextScene()
@@ -91,10 +131,15 @@ public class ExperimentManager : MonoBehaviour
         if (!string.IsNullOrEmpty(sceneOrder))
         {
             char sceneLetter = sceneOrder[0];
+            Debug.Log(sceneLetter);
             int sceneNumber = GetSceneNumberFromLetter(sceneLetter);
             sceneOrder = sceneOrder.Substring(1);
-            currentSceneLetter = sceneLetter;
-            currentSceneNumber = sceneNumber;
+            if (sceneLetter != 'Q')
+            {
+                currentSceneLetter = sceneLetter;
+            }
+            currentSceneNumber = sceneNumber;    
+            Debug.Log(sceneNumber);
             SceneManager.LoadScene(sceneNumber);
         }
         else 
@@ -111,26 +156,32 @@ public class ExperimentManager : MonoBehaviour
     {
         switch (letter)
         {
-            case 'A':
+            case 'S': // Start
                 return 0;
-            case 'B':
+            case 'A':
                 return 1;
-            case 'C':
+            case 'B':
                 return 2;
-            case 'D':
+            case 'C':
                 return 3;
-            case 'E':
+            case 'D':
                 return 4;
-            case 'F':
+            case 'E':
                 return 5;
-            case 'G':
+            case 'F':
                 return 6;
-            case 'H':
+            case 'G':
                 return 7;
-            case 'I':
+            case 'H':
                 return 8;
+            case 'I':
+                return 9;
+            case 'Q':
+                return 10; // Questionnaire Scene
+            case 'P':
+                return 11; // Pause scene
         }
-        return 9;
+        return 12; // End scene
     }
     
 }

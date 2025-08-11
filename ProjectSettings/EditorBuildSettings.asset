@@ -42,6 +42,9 @@ EditorBuildSettings:
     path: Assets/Owns Scenes/I-NoVisualNoSound.unity
     guid: a2092d3d646be482ea12c8bd5abe13f5
   - enabled: 1
+    path: Assets/Owns Scenes/ExperimentScenes/S-TART.unity
+    guid: f3e57ddce40de450e8149840a0f68cbf
+  - enabled: 1
     path: Assets/Owns Scenes/ExperimentScenes/A.unity
     guid: 338db8d9c0fc9471d8e1d641e5cd7bcf
   - enabled: 1
@@ -68,6 +71,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Owns Scenes/ExperimentScenes/I.unity
     guid: 5d14ec8de980b4cf68bd5111e9549ba0
+  - enabled: 1
+    path: Assets/Owns Scenes/ExperimentScenes/Q.unity
+    guid: 43e5fc90578424e46a0cf4020598fee0
+  - enabled: 1
+    path: Assets/Owns Scenes/ExperimentScenes/P-AUSE.unity
+    guid: 3c9f08e9bfd084e97b5cf77774b79e01
   - enabled: 1
     path: Assets/Owns Scenes/ExperimentScenes/X-END.unity
     guid: 4f60f303faded44c3a849d0c457cdcd6

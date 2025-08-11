@@ -15,14 +15,18 @@ public class SwitchScene : MonoBehaviour
     private float holdTimer = 0f;
     private bool menuVisible = false;
     private bool toggledDuringHold = false;
-    private string QUESTION_ONE_TEXT = "How intense does the visuals feel?";
-    private string QUESTION_TWO_TEXT = "How confident are you?";
-    private string QUESTION_THREE_TEXT = "How intense does the audio feel?";
-    private string QUESTION_FOUR_TEXT = "How confident are you?";
+    private string QUESTION_ONE_TEXT = "How fizzy does this environment feel?";
+    private string QUESTION_TWO_TEXT = "How confident are you in that rating?";
+    private string QUESTION_THREE_TEXT = "How sharp or tingly did the mouth sensation feel?";
+    private string QUESTION_FOUR_TEXT = "How confident are you in that rating?";
+    private string QUESTION_FIVE_TEXT = "How well did the environment match the sensation in your mouth?";
     
     
     void Start()
     {
+        if (menuUI == null)
+            return;
+        
         TryInitializeDevices();
         Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
         if (textTransform != null)
@@ -60,8 +64,35 @@ public class SwitchScene : MonoBehaviour
                 tmpText.text = QUESTION_FOUR_TEXT;
             }
         }
+        textTransform = menuUI.transform.Find("Interactive Controls/Question text5");
+        if (textTransform != null)
+        {
+            Text tmpText = textTransform.GetComponent<Text>();
+            if (tmpText != null)
+            {
+                tmpText.text = QUESTION_FIVE_TEXT;
+            }
+        }
     }
-
+/*
+ * Be part one out of 2 or three.
+ * Can we change the level of carbonation based on visual and audio.
+ * Can different levels of carbonation change what people see and hear?
+ * Based on these two we can create the system.
+ *
+ * This would be no this CHI but the next one. 
+ * We should get the participants and do the test.
+ *
+ * Thursday: Studies
+ * Create Doodle (Create for both)
+ * Oskar:
+ *  Finish the VR
+ *  Create Doodle and gather participants
+ *  Keep on writing on the
+ *  
+ * 
+ * 
+ */
     void TryInitializeDevices()
     {
         var leftHandDevices = new List<InputDevice>();
@@ -74,6 +105,10 @@ public class SwitchScene : MonoBehaviour
         if (rightHandDevices.Count > 0) rightHand = rightHandDevices[0];
     }
 
+    public void ToggleMenu()
+    {
+        menuVisible = !menuVisible;
+        menuUI.SetActive(menuVisible);    }
     void Update()
     {
         if (!leftHand.isValid || !rightHand.isValid)
@@ -87,33 +122,39 @@ public class SwitchScene : MonoBehaviour
         leftHand.TryGetFeatureValue(CommonUsages.primaryButton, out leftGrip);
         rightHand.TryGetFeatureValue(CommonUsages.primaryButton, out rightGrip);
 
-        if (leftGrip && rightGrip)
+        if (leftGrip)
         {
-            holdTimer += Time.deltaTime;
-
-            if (holdTimer >= holdThreshold && !toggledDuringHold)
-            {
-                menuVisible = !menuVisible;
-                menuUI.SetActive(menuVisible);
-                toggledDuringHold = true;
-                // Set text
-                // Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
-                // if (textTransform != null)
-                // {
-                //     Text tmpText = textTransform.GetComponent<Text>();
-                //     if (tmpText != null)
-                //     {
-                //         tmpText.text = QUESTION_ONE_TEXT;
-                //     }
-                // }
-            }
+            menuVisible = !menuVisible;
+            menuUI.SetActive(menuVisible);
         }
-        else
-        {
-            // Reset if grip is released
-            holdTimer = 0f;
-            toggledDuringHold = false;
-        }
+        
+        // if (leftGrip && rightGrip)
+        // {
+        //     holdTimer += Time.deltaTime;
+        //
+        //     if (holdTimer >= holdThreshold && !toggledDuringHold)
+        //     {
+        //         menuVisible = !menuVisible;
+        //         menuUI.SetActive(menuVisible);
+        //         toggledDuringHold = true;
+        //         // Set text
+        //         // Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
+        //         // if (textTransform != null)
+        //         // {
+        //         //     Text tmpText = textTransform.GetComponent<Text>();
+        //         //     if (tmpText != null)
+        //         //     {
+        //         //         tmpText.text = QUESTION_ONE_TEXT;
+        //         //     }
+        //         // }
+        //     }
+        // }
+        // else
+        // {
+        //     // Reset if grip is released
+        //     holdTimer = 0f;
+        //     toggledDuringHold = false;
+        // }
     }
     public void SwitchTo(int sceneNumber)
     {

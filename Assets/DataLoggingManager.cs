@@ -15,9 +15,9 @@ public class DataLoggingManager : MonoBehaviour
         }
     }
     
-    public void LogAnswer(int ParticipantNumber, char  SceneLetter, string questionOne, string questionTwo, string questionThree, string questionFour)
+    public void LogAnswer(int ParticipantNumber, char  SceneLetter, string questionOne, string questionTwo, string questionThree, string questionFour, string questionFive)
     {
-        File.AppendAllText(filePath, $"{ParticipantNumber}, {SceneLetter}, {questionOne}, {questionTwo}, {questionThree}, {questionFour}\n");
+        File.AppendAllText(filePath, $"{ParticipantNumber}, {SceneLetter}, {questionOne}, {questionTwo}, {questionThree}, {questionFour}, {questionFive}\n");
     } 
 
     // Update is called once per frame
