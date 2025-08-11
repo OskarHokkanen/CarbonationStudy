@@ -15,7 +15,7 @@ public class ExperimentManager : MonoBehaviour
     // Set the order of the scenes
     [Tooltip("Excluding the starter scene")]
     public static string sceneOrder = "SAQBQCQPDQEQFQPGQHQIQX";
-    public static int participantNumber = 566;
+    public static int participantNumber = 666;
     private static int currentSceneNumber;
     public Slider slider1;
     public Slider slider2;

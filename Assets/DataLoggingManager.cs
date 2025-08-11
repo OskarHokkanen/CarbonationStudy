@@ -11,7 +11,7 @@ public class DataLoggingManager : MonoBehaviour
 
         if (!File.Exists(filePath))
         {
-            File.WriteAllText(filePath, "ParticipantNumber, SceneLetter, VisualIntensity, VisualConfidence, AuditoryIntensity, AuditoryConfidence\n");
+            File.WriteAllText(filePath, "ParticipantNumber, SceneLetter, EnvironmentFizz, EnvironmentFizzConfidence, Sharpness, SharpnessConfidence, Match\n");
         }
     }
     
