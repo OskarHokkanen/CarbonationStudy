@@ -1,8 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class SwitchScene : MonoBehaviour
 {
@@ -20,6 +24,9 @@ public class SwitchScene : MonoBehaviour
     private string QUESTION_THREE_TEXT = "How sharp or tingly did the mouth sensation feel?";
     private string QUESTION_FOUR_TEXT = "How confident are you in that rating?";
     private string QUESTION_FIVE_TEXT = "How well did the environment match the sensation in your mouth?";
+    private Transform QuestionSetOne;
+    private Transform QuestionSetTwo;
+    private Transform QuestionSetThree;
     
     
     void Start()
@@ -28,7 +35,7 @@ public class SwitchScene : MonoBehaviour
             return;
         
         TryInitializeDevices();
-        Transform textTransform = menuUI.transform.Find("Interactive Controls/Question text");
+        Transform textTransform = menuUI.transform.Find("Interactive Controls/QuestionSetOne/Question text");
         if (textTransform != null)
         {
             Text tmpText = textTransform.GetComponent<Text>();
@@ -37,7 +44,7 @@ public class SwitchScene : MonoBehaviour
                 tmpText.text = QUESTION_ONE_TEXT;
             }
         }
-        textTransform = menuUI.transform.Find("Interactive Controls/Question text2");
+        textTransform = menuUI.transform.Find("Interactive Controls/QuestionSetOne/Question text2");
         if (textTransform != null)
         {
             Text tmpText = textTransform.GetComponent<Text>();
@@ -46,7 +53,7 @@ public class SwitchScene : MonoBehaviour
                 tmpText.text = QUESTION_TWO_TEXT;
             }
         }
-        textTransform = menuUI.transform.Find("Interactive Controls/Question text3");
+        textTransform = menuUI.transform.Find("Interactive Controls/QuestionSetTwo/Question text3");
         if (textTransform != null)
         {
             Text tmpText = textTransform.GetComponent<Text>();
@@ -54,8 +61,9 @@ public class SwitchScene : MonoBehaviour
             {
                 tmpText.text = QUESTION_THREE_TEXT;
             }
+            //textTransform.SetSiblingIndex(1);
         }
-        textTransform = menuUI.transform.Find("Interactive Controls/Question text4");
+        textTransform = menuUI.transform.Find("Interactive Controls/QuestionSetTwo/Question text4");
         if (textTransform != null)
         {
             Text tmpText = textTransform.GetComponent<Text>();
@@ -64,7 +72,7 @@ public class SwitchScene : MonoBehaviour
                 tmpText.text = QUESTION_FOUR_TEXT;
             }
         }
-        textTransform = menuUI.transform.Find("Interactive Controls/Question text5");
+        textTransform = menuUI.transform.Find("Interactive Controls/QuestionSetThree/Question text5");
         if (textTransform != null)
         {
             Text tmpText = textTransform.GetComponent<Text>();
@@ -73,8 +81,17 @@ public class SwitchScene : MonoBehaviour
                 tmpText.text = QUESTION_FIVE_TEXT;
             }
         }
+        
+        
+        
     }
-/*
+
+    private void Awake()
+    { 
+        Debug.LogError("HEEERREEEE");
+        RandomizeQuestionOrder();
+    }
+    /*
  * Be part one out of 2 or three.
  * Can we change the level of carbonation based on visual and audio.
  * Can different levels of carbonation change what people see and hear?
@@ -93,6 +110,28 @@ public class SwitchScene : MonoBehaviour
  * 
  * 
  */
+
+
+    public void RandomizeQuestionOrder()
+    {
+        
+        QuestionSetOne = menuUI.transform.Find("Interactive Controls/QuestionSetOne");
+        if (QuestionSetOne == null)
+        {
+            return;
+        }
+        QuestionSetTwo = menuUI.transform.Find("Interactive Controls/QuestionSetTwo");
+        QuestionSetThree = menuUI.transform.Find("Interactive Controls/QuestionSetThree");
+        System.Random rnd = new System.Random();
+
+        int[] numbers = { 1, 2, 3 };
+        numbers = numbers.OrderBy(x => rnd.Next()).ToArray();
+
+        Debug.LogError(numbers);
+        QuestionSetOne.SetSiblingIndex(numbers[0]);
+        QuestionSetTwo.SetSiblingIndex(numbers[1]);
+        QuestionSetThree.SetSiblingIndex(numbers[2]);
+    }  
     void TryInitializeDevices()
     {
         var leftHandDevices = new List<InputDevice>();
@@ -108,7 +147,8 @@ public class SwitchScene : MonoBehaviour
     public void ToggleMenu()
     {
         menuVisible = !menuVisible;
-        menuUI.SetActive(menuVisible);    }
+        menuUI.SetActive(menuVisible);    
+    }
     void Update()
     {
         if (!leftHand.isValid || !rightHand.isValid)
@@ -121,7 +161,14 @@ public class SwitchScene : MonoBehaviour
 
         leftHand.TryGetFeatureValue(CommonUsages.primaryButton, out leftGrip);
         rightHand.TryGetFeatureValue(CommonUsages.primaryButton, out rightGrip);
-
+        
+        if (InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
+                .TryGetFeatureValue(CommonUsages.secondaryButton, out bool bButtonPressed) && bButtonPressed)
+        {
+            ExperimentManager em = FindFirstObjectByType<ExperimentManager>();
+            em.NextSceneButtonPressed();
+        }
+        
         if (leftGrip)
         {
             menuVisible = !menuVisible;
@@ -156,6 +203,7 @@ public class SwitchScene : MonoBehaviour
         //     toggledDuringHold = false;
         // }
     }
+    
     public void SwitchTo(int sceneNumber)
     {
         SceneManager.LoadScene(sceneNumber);

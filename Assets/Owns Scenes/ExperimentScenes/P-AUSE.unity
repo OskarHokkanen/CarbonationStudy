@@ -281,7 +281,7 @@ PrefabInstance:
       propertyPath: m_Text
       value: 'Let''s take a break.
 
-        Please take of your headset'
+        Please take off your headset'
       objectReference: {fileID: 0}
     - target: {fileID: 3184454725631779473, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -353,18 +353,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4909959572970412238, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4909959572970412238, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4909959572970412238, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 475
       objectReference: {fileID: 0}
     - target: {fileID: 4909959572970412238, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: -433
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909959572970412239, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5355539425610285062, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
@@ -580,6 +584,11 @@ PrefabInstance:
 --- !u!224 &401627983 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1366264641406763436, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
+  m_PrefabInstance: {fileID: 401627982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &401627984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4909959572970412239, guid: 90d883abfef2c4fee8ce2488aafcbae0, type: 3}
   m_PrefabInstance: {fileID: 401627982}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &539704718
@@ -1086,6 +1095,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1534403079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534403081}
+  - component: {fileID: 1534403080}
+  m_Layer: 0
+  m_Name: PauseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1534403080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534403079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ebc2e4c22f34ac6a80b9a26c9fb798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  continueButton: {fileID: 401627984}
+--- !u!4 &1534403081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534403079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.20976584, y: 1.4988555, z: 1.297217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2044293432 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1767192433, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
@@ -1243,3 +1297,4 @@ SceneRoots:
   - {fileID: 539704720}
   - {fileID: 91144898}
   - {fileID: 974572335}
+  - {fileID: 1534403081}

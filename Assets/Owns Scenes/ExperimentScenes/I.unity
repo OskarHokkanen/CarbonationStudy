@@ -242,10 +242,12 @@ MonoBehaviour:
   slider2: {fileID: 1183347680}
   slider3: {fileID: 54019453}
   slider4: {fileID: 642900421}
+  slider5: {fileID: 0}
   valueText1: {fileID: 1183347679}
   valueText2: {fileID: 1183347678}
   valueText3: {fileID: 874488773}
   valueText4: {fileID: 310525230}
+  valueText5: {fileID: 0}
 --- !u!4 &91144898
 Transform:
   m_ObjectHideFlags: 0
@@ -16342,7 +16344,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f1ef37ae953c484bbc5d5e4049147e5, type: 2}
+  - {fileID: 2100000, guid: ca2e1d9403849434a91c523335eee46d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -16382,8 +16384,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

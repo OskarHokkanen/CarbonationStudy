@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.XR.Management;
 using Slider = UnityEngine.UI.Slider;
 
 
@@ -14,8 +15,8 @@ public class ExperimentManager : MonoBehaviour
 {
     // Set the order of the scenes
     [Tooltip("Excluding the starter scene")]
-    public static string sceneOrder = "SAQBQCQPDQEQFQPGQHQIQX";
-    public static int participantNumber = 666;
+    public static string sceneOrder = "SCQSDQSBQPSEQSAQSFQPSIQSGQSHQX";
+    public static int participantNumber = 21;
     private static int currentSceneNumber;
     public Slider slider1;
     public Slider slider2;
@@ -41,7 +42,11 @@ public class ExperimentManager : MonoBehaviour
          
     }
     void Start()
-    {   if (!firstSceneLoaded)
+    {   
+        
+        StartCoroutine(StartXR());
+        
+        if (!firstSceneLoaded)
         {
             firstSceneLoaded = true;
             // Start loading scenes
@@ -65,23 +70,41 @@ public class ExperimentManager : MonoBehaviour
         }
 
         Debug.Log(currentSceneNumber);
-        if (currentSceneLetter != 'P' && currentSceneNumber != 10)
+        Debug.Log(currentSceneLetter);
+        if (currentSceneLetter != 'P' && currentSceneNumber != 10  && currentSceneLetter != 'S')
         {
             StartCoroutine(SceneTimer());
             Debug.Log("After Scene Timer");    
+            
         } 
+    }
+    
+    IEnumerator StartXR()
+    {
+        XRGeneralSettings.Instance.Manager.InitializeLoader();
+        yield return null;
+        XRGeneralSettings.Instance.Manager.StartSubsystems();
     }
     
     private IEnumerator SceneTimer()
     {
         Debug.Log("Scene Timer");
-        yield return new WaitForSeconds(15f);
-        // Do something after 15 seconds
+        yield return new WaitForSeconds(20f);
+        // Do something after 20 seconds
         LoadNextScene();
         // Example: automatically go to next scene
         // LogAnswersAndLoadNextScene();
     }
 
+    public void NextSceneButtonPressed()
+    {
+        if (currentSceneLetter != 'S')
+        {
+            return;
+        }
+
+        LoadNextScene();
+    }
     void OnSliderValueChanged(float value)
     {
         questionOneScore = value.ToString();
@@ -141,6 +164,7 @@ public class ExperimentManager : MonoBehaviour
             currentSceneNumber = sceneNumber;    
             Debug.Log(sceneNumber);
             SceneManager.LoadScene(sceneNumber);
+            
         }
         else 
         {
